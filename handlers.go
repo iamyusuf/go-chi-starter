@@ -58,12 +58,12 @@ func (app App) customHandler(w http.ResponseWriter, r *http.Request) error {
 }
 
 func (app App) testHandler(w http.ResponseWriter, r *http.Request) error {
-	responseData := map[string]interface{}{
+	response := map[string]interface{}{
 		"success": true,
 		"message": "Successful",
 	}
 
-	return jsonResponse(w, http.StatusOK, responseData)
+	return jsonResponse(w, http.StatusOK, response)
 }
 
 func (app App) textHandler(w http.ResponseWriter, r *http.Request) error {
