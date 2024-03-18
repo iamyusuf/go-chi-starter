@@ -22,6 +22,7 @@ func (s ChiServer) registerRoutes() {
 	})
 
 	s.mux.Method("GET", "/custom", Handler(customHandler))
+	s.mux.Method("GET", "/test", Handler(testHandler))
 }
 
 func (s ChiServer) Start(address string) error {

@@ -28,3 +28,12 @@ func customHandler(w http.ResponseWriter, r *http.Request) error {
 	_, err := w.Write([]byte("foo"))
 	return err
 }
+
+func testHandler(w http.ResponseWriter, r *http.Request) error {
+	responseData := map[string]interface{}{
+		"success": true,
+		"message": "Successful",
+	}
+
+	return jsonResponse(w, http.StatusOK, responseData)
+}
