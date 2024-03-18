@@ -1,10 +1,8 @@
 package main
 
+import "log"
+
 func main() {
 	s := NewServer()
-	err := s.Start(":3000")
-
-	if err != nil {
-		return
-	}
+	log.Fatal(s.Start(":3000"))
 }
