@@ -10,20 +10,20 @@ type ChiServer struct {
 	mux *chi.Mux
 }
 
-func (s ChiServer) registerMiddlewares() {
-	s.mux.Use(middleware.Logger)
-	s.mux.Use(middleware.Recoverer)
-	s.mux.Use(middleware.RequestID)
+func (server ChiServer) registerMiddlewares() {
+	server.mux.Use(middleware.Logger)
+	server.mux.Use(middleware.Recoverer)
+	server.mux.Use(middleware.RequestID)
 }
 
-func (s ChiServer) registerRoutes() {
-	s.mux.Method("GET", "/", Handler(textHandler))
-	s.mux.Method("GET", "/custom", Handler(customHandler))
-	s.mux.Method("GET", "/test", Handler(testHandler))
+func (server ChiServer) registerRoutes() {
+	server.mux.Method("GET", "/", Handler(server.textHandler))
+	server.mux.Method("GET", "/custom", Handler(server.customHandler))
+	server.mux.Method("GET", "/test", Handler(server.testHandler))
 }
 
-func (s ChiServer) Start(address string) error {
-	s.registerMiddlewares()
-	s.registerRoutes()
-	return http.ListenAndServe(address, s.mux)
+func (server ChiServer) Start(address string) error {
+	server.registerMiddlewares()
+	server.registerRoutes()
+	return http.ListenAndServe(address, server.mux)
 }
