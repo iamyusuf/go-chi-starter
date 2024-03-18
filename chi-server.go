@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
+	"strings"
 )
 
 type ChiServer struct {
@@ -11,7 +12,7 @@ type ChiServer struct {
 }
 
 func (server ChiServer) method(method, pattern string, handler Handler) {
-	server.mux.Method(method, pattern, handler)
+	server.mux.Method(strings.ToUpper(method), pattern, handler)
 }
 
 func (server ChiServer) registerMiddlewares() {
@@ -21,9 +22,9 @@ func (server ChiServer) registerMiddlewares() {
 }
 
 func (server ChiServer) registerRoutes() {
-	server.method("GET", "/", server.textHandler)
-	server.method("GET", "/custom", server.customHandler)
-	server.method("GET", "/test", server.testHandler)
+	server.method("get", "/", server.textHandler)
+	server.method("get", "/custom", server.customHandler)
+	server.method("get", "/test", server.testHandler)
 }
 
 func (server ChiServer) Start(address string) error {
