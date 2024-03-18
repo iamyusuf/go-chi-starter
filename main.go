@@ -53,18 +53,6 @@ func (s ChiServer) registerRoutes() {
 	s.mux.Method("GET", "/custom", Handler(customHandler))
 }
 
-type Server interface {
-	Start(address string) error
-}
-
-func NewServer() Server {
-	s := ChiServer{
-		mux: chi.NewRouter(),
-	}
-
-	return s
-}
-
 func main() {
 	s := NewServer()
 	err := s.Start(":3000")
