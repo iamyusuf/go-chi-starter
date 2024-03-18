@@ -16,10 +16,6 @@ func (s ChiServer) registerMiddlewares() {
 	s.mux.Use(middleware.RequestID)
 }
 
-func textHandler(w http.ResponseWriter, r *http.Request) error {
-	return textResponse(w, http.StatusOK, "Hello World")
-}
-
 func (s ChiServer) registerRoutes() {
 	s.mux.Method("GET", "/", Handler(textHandler))
 	s.mux.Method("GET", "/custom", Handler(customHandler))

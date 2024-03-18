@@ -37,3 +37,7 @@ func testHandler(w http.ResponseWriter, r *http.Request) error {
 
 	return jsonResponse(w, http.StatusOK, responseData)
 }
+
+func textHandler(w http.ResponseWriter, r *http.Request) error {
+	return textResponse(w, http.StatusOK, "Hello World")
+}
