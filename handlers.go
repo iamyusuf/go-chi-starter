@@ -8,10 +8,38 @@ import (
 type Handler func(w http.ResponseWriter, r *http.Request) error
 
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	message := ""
+
 	if err := h(w, r); err != nil {
-		// handle returned error here.
-		w.WriteHeader(503)
-		_, err := w.Write([]byte("bad"))
+		switch {
+		case errors.Is(err, ErrInternalServerError):
+			// Handle internal server error
+			// ...
+		case errors.Is(err, ErrBadRequest):
+			// Handle bad request
+			// ...
+		case errors.Is(err, ErrUnauthorized):
+			// Handle unauthorized access
+			// ...
+		case errors.Is(err, ErrForbidden):
+			// Handle forbidden access
+			// ...
+		case errors.Is(err, ErrNotFound):
+			// Handle not found error
+			// ...
+		default:
+			// Handle other errors
+			// ...
+		}
+
+		response := map[string]interface{}{
+			"success": true,
+			"error":   err,
+			"message": message,
+		}
+
+		err := jsonResponse(w, 404, response)
+
 		if err != nil {
 			return
 		}
