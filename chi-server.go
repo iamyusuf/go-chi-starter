@@ -4,7 +4,6 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
-	"strings"
 )
 
 type ChiServer struct {
@@ -12,7 +11,7 @@ type ChiServer struct {
 }
 
 func (server ChiServer) method(method, pattern string, handler Handler) {
-	server.mux.Method(strings.ToUpper(method), pattern, handler)
+	server.mux.Method(method, pattern, handler)
 }
 
 func (server ChiServer) registerMiddlewares() {
