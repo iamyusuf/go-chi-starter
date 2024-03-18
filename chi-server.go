@@ -10,6 +10,10 @@ type ChiServer struct {
 	mux *chi.Mux
 }
 
+func (server ChiServer) method(method, pattern string, handler Handler) {
+	server.mux.Method(method, pattern, handler)
+}
+
 func (server ChiServer) registerMiddlewares() {
 	server.mux.Use(middleware.Logger)
 	server.mux.Use(middleware.Recoverer)
@@ -17,9 +21,9 @@ func (server ChiServer) registerMiddlewares() {
 }
 
 func (server ChiServer) registerRoutes() {
-	server.mux.Method("GET", "/", Handler(server.textHandler))
-	server.mux.Method("GET", "/custom", Handler(server.customHandler))
-	server.mux.Method("GET", "/test", Handler(server.testHandler))
+	server.method("GET", "/", server.textHandler)
+	server.method("GET", "/custom", server.customHandler)
+	server.method("GET", "/test", server.testHandler)
 }
 
 func (server ChiServer) Start(address string) error {
