@@ -7,7 +7,7 @@ type Server interface {
 }
 
 func NewServer() Server {
-	s := ChiServer{
+	s := App{
 		mux: chi.NewRouter(),
 	}
 

@@ -6,28 +6,28 @@ import (
 	"net/http"
 )
 
-type ChiServer struct {
+type App struct {
 	mux *chi.Mux
 }
 
-func (server ChiServer) register(method, pattern string, handler Handler) {
-	server.mux.Method(method, pattern, handler)
+func (app App) register(method, pattern string, handler Handler) {
+	app.mux.Method(method, pattern, handler)
 }
 
-func (server ChiServer) registerMiddlewares() {
-	server.mux.Use(middleware.Logger)
-	server.mux.Use(middleware.Recoverer)
-	server.mux.Use(middleware.RequestID)
+func (app App) registerMiddlewares() {
+	app.mux.Use(middleware.Logger)
+	app.mux.Use(middleware.Recoverer)
+	app.mux.Use(middleware.RequestID)
 }
 
-func (server ChiServer) registerRoutes() {
-	server.register("get", "/", server.textHandler)
-	server.register("get", "/custom", server.customHandler)
-	server.register("get", "/test", server.testHandler)
+func (app App) registerRoutes() {
+	app.register("get", "/", app.textHandler)
+	app.register("get", "/custom", app.customHandler)
+	app.register("get", "/test", app.testHandler)
 }
 
-func (server ChiServer) Start(address string) error {
-	server.registerMiddlewares()
-	server.registerRoutes()
-	return http.ListenAndServe(address, server.mux)
+func (app App) Start(address string) error {
+	app.registerMiddlewares()
+	app.registerRoutes()
+	return http.ListenAndServe(address, app.mux)
 }

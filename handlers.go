@@ -46,7 +46,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (server ChiServer) customHandler(w http.ResponseWriter, r *http.Request) error {
+func (app App) customHandler(w http.ResponseWriter, r *http.Request) error {
 	q := r.URL.Query().Get("err")
 
 	if q != "" {
@@ -57,7 +57,7 @@ func (server ChiServer) customHandler(w http.ResponseWriter, r *http.Request) er
 	return err
 }
 
-func (server ChiServer) testHandler(w http.ResponseWriter, r *http.Request) error {
+func (app App) testHandler(w http.ResponseWriter, r *http.Request) error {
 	responseData := map[string]interface{}{
 		"success": true,
 		"message": "Successful",
@@ -66,6 +66,6 @@ func (server ChiServer) testHandler(w http.ResponseWriter, r *http.Request) erro
 	return jsonResponse(w, http.StatusOK, responseData)
 }
 
-func (server ChiServer) textHandler(w http.ResponseWriter, r *http.Request) error {
+func (app App) textHandler(w http.ResponseWriter, r *http.Request) error {
 	return textResponse(w, http.StatusOK, "Hello World")
 }
