@@ -16,11 +16,12 @@ func (s ChiServer) registerMiddlewares() {
 	s.mux.Use(middleware.RequestID)
 }
 
-func (s ChiServer) registerRoutes() {
-	s.mux.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		textResponse(w, "Hello World", 200)
-	})
+func textHandler(w http.ResponseWriter, r *http.Request) error {
+	return textResponse(w, http.StatusOK, "Hello World")
+}
 
+func (s ChiServer) registerRoutes() {
+	s.mux.Method("GET", "/", Handler(textHandler))
 	s.mux.Method("GET", "/custom", Handler(customHandler))
 	s.mux.Method("GET", "/test", Handler(testHandler))
 }
