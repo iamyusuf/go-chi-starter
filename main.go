@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
 )
@@ -29,14 +28,6 @@ func customHandler(w http.ResponseWriter, r *http.Request) error {
 
 	_, err := w.Write([]byte("foo"))
 	return err
-}
-
-type ChiServer struct {
-	mux *chi.Mux
-}
-
-func (s ChiServer) Start(address string) error {
-	return http.ListenAndServe(address, s.mux)
 }
 
 func (s ChiServer) registerMiddlewares() {
